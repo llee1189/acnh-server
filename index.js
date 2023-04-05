@@ -82,7 +82,7 @@ app.post('/check-caught-pokemon',  (req, res) => {
     })
 })
 
-app.listen(3001, () => {
+app.listen(10000, () => {
     console.log("running on port 3001");
 })
 
