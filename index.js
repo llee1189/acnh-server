@@ -15,72 +15,49 @@ const db = mysql.createConnection({
     database: 'test'
 });
 
-app.post('/register', (req, res) => {
-    const username = req.body.username;
-    db.query("SELECT * FROM users WHERE username = ?", [username],(err, result) => {
-        if (result[0] != undefined) {
-            res.send("BAD")
-        } else {
-            db.query("INSERT INTO users (username) VALUES (?)", [username], (err, result) => {
-            })
-            res.send("GOOD")
-        }
-    })
-})
-
-app.post('/login', (req, res) => {
-    const username = req.body.username;
-    db.query("SELECT * FROM users WHERE username = ?", [username], (err, result) => {
-        console.log(result)
-        if (result[0] == undefined) {
-            res.send("BAD")
-        } else {
-            res.send("GOOD")
-        }
-    })
-})
-
-app.post('/db-pokemon',  (req, res) => {
-    const username = req.body.username;
-    const pokemon = req.body.pokemon;
-    db.query("SELECT * FROM pokemon WHERE username = ? AND pokemon = ?", [username, pokemon], (err, result) => {
-        if (result[0] != undefined) {
-            res.send("This user has already seen this pokemon.")
-        } else {
-            db.query("INSERT INTO pokemon (username, pokemon) VALUES (?, ?)", [username, pokemon], (err, result) => {
-                res.send("Adding that the user has seen this pokemon.")
-            })
-        }
-    })
-    
-})
-
-app.post('/seen-pokemon',  (req, res) => {
-    const username = req.body.username;
-    const pokemon = req.body.pokemon;
-    db.query("SELECT * FROM pokemon WHERE username = ? AND pokemon = ?", [username, pokemon], (err, result) => {
-        if (result[0] != undefined) {
-            res.send("SEEN")
-        } else {
-            res.send("NOT SEEN")
-        }
-    })
-})
-
-app.post('/caught-pokemon',  (req, res) => {
-    const username = req.body.username;
-    const pokemon = req.body.pokemon;
-    db.query("UPDATE pokemon SET caught = 1 WHERE username = ? AND pokemon = ? ", [username, pokemon], (err, result) => {
-    })
-})
-
-app.post('/check-caught-pokemon',  (req, res) => {
-    const username = req.body.username;
-    const pokemon = req.body.pokemon;
-    db.query("SELECT caught FROM pokemon WHERE username = ? AND pokemon = ? ", [username, pokemon], (err, result) => {
+app.post('/fish', (req, res) => {
+    const m = req.body.m;
+    console.log(m)
+    db.query("SELECT * FROM fish WHERE nmonth LIKE ? OR nmonth = 'all'", ["%" + m + "%"],(err, result) => {
         res.send(result)
     })
 })
+
+app.post('/fish1', (req, res) => {
+    const m = req.body.m;
+    db.query("SELECT * FROM fish WHERE smonth LIKE ? OR smonth = 'all'", ["%" + m + "%"],(err, result) => {
+        res.send(result)
+    })
+})
+
+app.post('/bug', (req, res) => {
+    const m = req.body.m;
+    db.query("SELECT * FROM bug WHERE nmonth LIKE ? OR nmonth = 'all'", ["%" + m + "%"],(err, result) => {
+        res.send(result)
+    })
+})
+
+app.post('/bug1', (req, res) => {
+    const m = req.body.m;
+    db.query("SELECT * FROM bug WHERE smonth LIKE ? OR smonth = 'all'", ["%" + m + "%"],(err, result) => {
+        res.send(result)
+    })
+})
+
+app.post('/sea', (req, res) => {
+    const m = req.body.m;
+    db.query("SELECT * FROM sea WHERE nmonth LIKE ? OR nmonth = 'all'", ["%" + m + "%"],(err, result) => {
+        res.send(result)
+    })
+})
+
+app.post('/sea1', (req, res) => {
+    const m = req.body.m;
+    db.query("SELECT * FROM sea WHERE smonth LIKE ? OR smonth = 'all'", ["%" + m + "%"],(err, result) => {
+        res.send(result)
+    })
+})
+
 
 app.listen(10000, () => {
     console.log("running on port 3001");
